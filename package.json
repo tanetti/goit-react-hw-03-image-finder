@@ -1,8 +1,8 @@
 {
-  "name": "create-react-app-template",
+  "name": "goit-react-hw-03-image-finder",
   "version": "0.1.2",
   "private": true,
-  "homepage": "https://tanetti.github.io/create-react-app-template/",
+  "homepage": "https://tanetti.github.io/goit-react-hw-03-image-finder/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^12.1.5",
