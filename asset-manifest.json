@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/create-react-app-template/static/css/main.c3d5249d.css",
+    "main.js": "/create-react-app-template/static/js/main.dcdb2a82.js",
+    "index.html": "/create-react-app-template/index.html",
+    "main.c3d5249d.css.map": "/create-react-app-template/static/css/main.c3d5249d.css.map",
+    "main.dcdb2a82.js.map": "/create-react-app-template/static/js/main.dcdb2a82.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c3d5249d.css",
+    "static/js/main.dcdb2a82.js"
+  ]
+}
