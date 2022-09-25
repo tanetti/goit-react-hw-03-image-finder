@@ -5,11 +5,10 @@ import { ImageGalleryItem } from './ImageGalleryItem/ImageGalleryItem';
 import { LoadMoreButton } from './LoadMoreButton/LoadMoreButton';
 import { Loader } from './Loader/Loader';
 import { Component } from 'react';
-import { Modal } from './Modal/Modal';
 
 export class ImageGallery extends Component {
   state = {
-    modalImageToShow: {},
+    modalIdToShow: null,
   };
 
   componentDidMount() {
@@ -25,19 +24,16 @@ export class ImageGallery extends Component {
   }
 
   onImageClick = evt => {
-    if (!evt.target?.dataset.fullimage) return;
+    if (!evt.target?.dataset.id) return;
 
     this.setState({
-      modalImageToShow: {
-        src: evt.target.dataset.fullimage,
-        alt: evt.target.alt,
-      },
+      modalIdToShow: evt.target.dataset.id,
     });
   };
 
   onModalClose = () => {
     this.setState({
-      modalImageToShow: {},
+      modalIdToShow: null,
     });
   };
 
@@ -51,9 +47,12 @@ export class ImageGallery extends Component {
             {this.props.galleryData.map(item => (
               <ImageGalleryItem
                 key={item.id}
+                id={item.id}
                 smallImage={item.webformatURL}
                 largeImage={item.largeImageURL}
                 tags={item.tags}
+                modalIdToShow={this.state.modalIdToShow}
+                onModalClose={this.onModalClose}
               />
             ))}
           </ImageList>
@@ -63,12 +62,6 @@ export class ImageGallery extends Component {
           <LoadMoreButton
             title="Load more"
             onLoadMore={this.props.onLoadMore}
-          />
-        ) : null}
-        {Object.keys(this.state.modalImageToShow).length > 0 ? (
-          <Modal
-            modalImageToShow={this.state.modalImageToShow}
-            onClose={this.onModalClose}
           />
         ) : null}
       </>

@@ -37,8 +37,8 @@ export class Modal extends Component {
       <Overlay data-action="overlay">
         <ModalWindow>
           <img
-            src={this.props.modalImageToShow.src}
-            alt={this.props.modalImageToShow.alt}
+            src={this.props.modalImageToShow}
+            alt={this.props.modalImageAlt}
           />
         </ModalWindow>
       </Overlay>,
@@ -48,9 +48,7 @@ export class Modal extends Component {
 }
 
 Modal.propTypes = {
-  modalImageToShow: PropTypes.exact({
-    src: PropTypes.string.isRequired,
-    alt: PropTypes.string.isRequired,
-  }).isRequired,
+  modalImageToShow: PropTypes.string.isRequired,
+  modalImageAlt: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
 };
