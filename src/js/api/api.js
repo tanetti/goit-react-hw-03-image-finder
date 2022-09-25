@@ -7,6 +7,8 @@ import {
   PER_PAGE,
 } from 'constants/constants';
 
+axios.defaults.baseURL = API_BASE_URL;
+
 export const fetchImages = async (queryValue, currentPage) => {
   const urlParams = {
     q: queryValue,
@@ -18,7 +20,7 @@ export const fetchImages = async (queryValue, currentPage) => {
   };
 
   const fetchData = await axios
-    .get(API_BASE_URL, { params: urlParams })
+    .get('/api', { params: urlParams })
     .catch(() => 'error');
 
   if (fetchData === 'error') return fetchData;
