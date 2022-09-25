@@ -21,7 +21,7 @@ export const fetchImages = async (queryValue, currentPage) => {
     .get(API_BASE_URL, { params: urlParams })
     .catch(() => 'error');
 
-  if (fetchData === 'error') return;
+  if (fetchData === 'error') return fetchData;
 
   return fetchData.data;
 };
