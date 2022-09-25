@@ -1,32 +1,41 @@
 import PropTypes from 'prop-types';
 import { GalleryImage, GalleryItem } from './ImageGalleryItem.styled';
 import { Modal } from '../Modal/Modal';
+import { Component } from 'react';
 
-export const ImageGalleryItem = ({
-  id,
-  smallImage,
-  largeImage,
-  tags,
-  modalIdToShow,
-  onModalClose,
-}) => (
-  <GalleryItem>
-    <GalleryImage src={smallImage} alt={tags} data-id={id} />
-    {Number(modalIdToShow) === id ? (
-      <Modal
-        modalImageToShow={largeImage}
-        modalImageAlt={tags}
-        onClose={onModalClose}
-      />
-    ) : null}
-  </GalleryItem>
-);
+export class ImageGalleryItem extends Component {
+  state = {
+    shouldModalShown: false,
+  };
+
+  toggleModal = () => {
+    this.setState(prevState => ({
+      shouldModalShown: !prevState.shouldModalShown,
+    }));
+  };
+
+  render() {
+    return (
+      <GalleryItem>
+        <GalleryImage
+          src={this.props.smallImage}
+          alt={this.props.tags}
+          onClick={this.toggleModal}
+        />
+        {this.state.shouldModalShown ? (
+          <Modal
+            modalImageToShow={this.props.largeImage}
+            modalImageAlt={this.props.tags}
+            onClose={this.toggleModal}
+          />
+        ) : null}
+      </GalleryItem>
+    );
+  }
+}
 
 ImageGalleryItem.propTypes = {
-  id: PropTypes.number.isRequired,
   smallImage: PropTypes.string.isRequired,
   largeImage: PropTypes.string.isRequired,
   tags: PropTypes.string.isRequired,
-  modalIdToShow: PropTypes.any,
-  onModalClose: PropTypes.func.isRequired,
 };
