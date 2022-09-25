@@ -85,7 +85,7 @@ export class App extends Component {
       <>
         <GlobalStyles />
         <SearchBar onSubmit={this.submitSearch} />
-        <main>
+        <main data-action="gallery">
           {error ? (
             <MainNotification notification="Ooops, something went wrong" />
           ) : searchData.length === 0 && !searchValue ? (
