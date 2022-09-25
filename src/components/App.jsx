@@ -20,12 +20,12 @@ export class App extends Component {
   };
 
   async componentDidUpdate() {
-    const fetchResult = await fetchImages(
-      this.state.searchValue,
-      this.state.currentPage
-    );
-
     if (this.state.isLoading) {
+      const fetchResult = await fetchImages(
+        this.state.searchValue,
+        this.state.currentPage
+      );
+
       if (fetchResult === 'error') {
         this.setState({ error: true, isLoading: false, searchValue: null });
         return;
