@@ -1,13 +1,19 @@
 import PropTypes from 'prop-types';
+import { Loader } from '../Loader/Loader';
 import { ButtonContainer, StyledButton } from './LoadMoreButton.styled';
 
-export const LoadMoreButton = ({ title, onLoadMore }) => (
+export const LoadMoreButton = ({ title, onLoadMore, status }) => (
   <ButtonContainer>
-    <StyledButton onClick={onLoadMore}>{title}</StyledButton>
+    {status === 'pending' ? (
+      <Loader />
+    ) : (
+      <StyledButton onClick={onLoadMore}>{title}</StyledButton>
+    )}
   </ButtonContainer>
 );
 
 LoadMoreButton.propTypes = {
   title: PropTypes.string.isRequired,
   onLoadMore: PropTypes.func.isRequired,
+  status: PropTypes.string.isRequired,
 };

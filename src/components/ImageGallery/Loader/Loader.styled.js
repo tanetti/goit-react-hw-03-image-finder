@@ -5,6 +5,4 @@ export const LoaderContainer = styled.div`
   justify-content: center;
 
   width: 100%;
-  padding-top: 8px;
-  padding-bottom: 24px;
 `;
