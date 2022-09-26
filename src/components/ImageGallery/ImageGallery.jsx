@@ -11,22 +11,17 @@ export class ImageGallery extends Component {
   state = {
     galleryData: [],
     totalResults: 0,
-    currentPage: 1,
     status: 'idle',
   };
 
-  async componentDidUpdate(prevProps, prevState) {
-    const searchValue = this.props.searchValue;
-    const currentPage = this.state.currentPage;
+  async componentDidUpdate(prevProps, _) {
+    const { searchValue, currentPage } = this.props;
 
     if (
       prevProps.searchValue === searchValue &&
-      prevState.currentPage === currentPage
+      prevProps.currentPage === currentPage
     )
       return;
-
-    if (prevProps.searchValue !== searchValue)
-      this.setState({ galleryData: [], totalResults: 0, currentPage: 1 });
 
     this.setState({ status: 'pending' });
 
@@ -38,20 +33,18 @@ export class ImageGallery extends Component {
       return this.setState({ status: 'empty' });
 
     this.setState({
-      galleryData: [...this.state.galleryData, ...fetchResult.hits],
+      galleryData:
+        currentPage === 1
+          ? fetchResult.hits
+          : [...this.state.galleryData, ...fetchResult.hits],
       totalResults: fetchResult.totalHits,
       status: 'resolved',
     });
   }
 
-  loadMore = () => {
-    this.setState(prevState => ({
-      currentPage: prevState.currentPage + 1,
-    }));
-  };
-
   render() {
-    const { galleryData, totalResults, currentPage, status } = this.state;
+    const { galleryData, totalResults, status } = this.state;
+    const { loadMore, currentPage } = this.props;
 
     if (status === 'idle')
       return <MainNotification notification="Let's find some images" />;
@@ -73,7 +66,7 @@ export class ImageGallery extends Component {
           {forwardHitsCount > 0 && (
             <LoadMoreButton
               title="Load more"
-              onLoadMore={this.loadMore}
+              onLoadMore={loadMore}
               status={status}
             />
           )}
@@ -85,4 +78,6 @@ export class ImageGallery extends Component {
 
 ImageGallery.propTypes = {
   searchValue: PropTypes.string.isRequired,
+  currentPage: PropTypes.number.isRequired,
+  loadMore: PropTypes.func.isRequired,
 };

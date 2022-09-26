@@ -6,6 +6,7 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 export class App extends Component {
   state = {
     searchValue: '',
+    currentPage: 1,
   };
 
   submitSearch = evt => {
@@ -17,16 +18,29 @@ export class App extends Component {
 
     this.setState({
       searchValue: currentQuery,
+      currentPage: 1,
     });
   };
 
+  loadMore = () => {
+    this.setState(prevState => ({
+      currentPage: prevState.currentPage + 1,
+    }));
+  };
+
   render() {
+    const { searchValue, currentPage } = this.state;
+
     return (
       <>
         <GlobalStyles />
         <SearchBar onSubmit={this.submitSearch} />
         <main>
-          <ImageGallery searchValue={this.state.searchValue} />
+          <ImageGallery
+            searchValue={searchValue}
+            currentPage={currentPage}
+            loadMore={this.loadMore}
+          />
         </main>
       </>
     );
