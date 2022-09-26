@@ -5,41 +5,40 @@ import { ImageGallery } from './ImageGallery/ImageGallery';
 
 export class App extends Component {
   state = {
-    searchValue: '',
+    searchQuery: '',
     currentPage: 1,
   };
 
-  submitSearch = evt => {
-    evt.preventDefault();
+  onSearchSubmit = formSearchQuery => {
+    const formatedSearchQuery = formSearchQuery.trim().toLowerCase();
 
-    const currentQuery = evt.target.search.value.trim().toLowerCase();
-
-    if (currentQuery === this.state.searchValue || !currentQuery) return;
+    if (!formatedSearchQuery || this.state.searchQuery === formatedSearchQuery)
+      return;
 
     this.setState({
-      searchValue: currentQuery,
+      searchQuery: formatedSearchQuery,
       currentPage: 1,
     });
   };
 
-  loadMore = () => {
+  onLoadMore = () => {
     this.setState(prevState => ({
       currentPage: prevState.currentPage + 1,
     }));
   };
 
   render() {
-    const { searchValue, currentPage } = this.state;
+    const { searchQuery, currentPage } = this.state;
 
     return (
       <>
         <GlobalStyles />
-        <SearchBar onSubmit={this.submitSearch} />
+        <SearchBar onSubmit={this.onSearchSubmit} />
         <main>
           <ImageGallery
-            searchValue={searchValue}
+            searchQuery={searchQuery}
             currentPage={currentPage}
-            loadMore={this.loadMore}
+            onLoadMore={this.onLoadMore}
           />
         </main>
       </>

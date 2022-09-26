@@ -4,8 +4,8 @@ import { fetchImages } from 'js/api/api';
 import { MainNotification } from 'components/MainNotification/MainNotification';
 import { Loader } from './Loader/Loader';
 import { ImageGalleryList } from './ImageGalleryList/ImageGalleryList';
-import { PER_PAGE } from 'constants/constants';
 import { LoadMoreButton } from './LoadMoreButton/LoadMoreButton';
+import { PER_PAGE } from 'constants/constants';
 
 export class ImageGallery extends Component {
   state = {
@@ -15,17 +15,17 @@ export class ImageGallery extends Component {
   };
 
   async componentDidUpdate(prevProps, _) {
-    const { searchValue, currentPage } = this.props;
+    const { searchQuery, currentPage } = this.props;
 
     if (
-      prevProps.searchValue === searchValue &&
+      prevProps.searchQuery === searchQuery &&
       prevProps.currentPage === currentPage
     )
       return;
 
     this.setState({ status: 'pending' });
 
-    const fetchResult = await fetchImages(searchValue, currentPage);
+    const fetchResult = await fetchImages(searchQuery, currentPage);
 
     if (fetchResult === 'error') return this.setState({ status: 'rejected' });
 
@@ -44,7 +44,7 @@ export class ImageGallery extends Component {
 
   render() {
     const { galleryData, totalResults, status } = this.state;
-    const { loadMore, currentPage } = this.props;
+    const { onLoadMore, currentPage } = this.props;
 
     if (status === 'idle')
       return <MainNotification notification="Let's find some images" />;
@@ -66,7 +66,7 @@ export class ImageGallery extends Component {
           {forwardHitsCount > 0 && (
             <LoadMoreButton
               title="Load more"
-              onLoadMore={loadMore}
+              onLoadMore={onLoadMore}
               status={status}
             />
           )}
@@ -77,7 +77,7 @@ export class ImageGallery extends Component {
 }
 
 ImageGallery.propTypes = {
-  searchValue: PropTypes.string.isRequired,
+  searchQuery: PropTypes.string.isRequired,
   currentPage: PropTypes.number.isRequired,
-  loadMore: PropTypes.func.isRequired,
+  onLoadMore: PropTypes.func.isRequired,
 };
